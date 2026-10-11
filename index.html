@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scribe – Free English audio transcription</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Figtree:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glow g1" aria-hidden="true"></div>
+  <div class="glow g2" aria-hidden="true"></div>
+
+  <div class="page">
+    <header class="hero">
+      <p class="brand">Scribe</p>
+      <h1>Say it once.<br><em>Read it forever.</em></h1>
+      <p class="lede">Drop in an English recording and get the words back as text. Free, no account, and nothing is uploaded: the AI works right inside your browser.</p>
+      <canvas id="hero" aria-hidden="true"></canvas>
+    </header>
+
+    <main class="layout">
+      <section class="glass" aria-labelledby="up-title">
+        <h2 id="up-title">Your recording</h2>
+
+        <label id="dropzone" class="dropzone" tabindex="0">
+          <input id="fileInput" type="file" accept="audio/*,video/mp4,video/webm" hidden>
+          <canvas id="wave" width="600" height="140" aria-hidden="true"></canvas>
+          <span id="dropText">Drop an audio file here, or click to choose one<br><small>MP3, WAV, M4A, OGG, FLAC, WEBM</small></span>
+        </label>
+
+        <audio id="player" controls hidden></audio>
+
+        <div class="row">
+          <label for="modelSelect">Accuracy</label>
+          <select id="modelSelect">
+            <option value="Xenova/whisper-tiny.en">Fast (tiny, ~40 MB)</option>
+            <option value="Xenova/whisper-base.en" selected>Balanced (base, ~75 MB)</option>
+            <option value="Xenova/whisper-small.en">Best (small, ~250 MB)</option>
+          </select>
+        </div>
+
+        <label class="check gpu"><input type="checkbox" id="gpuToggle"> Use graphics card (much faster on long files, larger download, experimental)</label>
+
+        <button id="goBtn" class="primary" disabled>Transcribe</button>
+
+        <div id="status" class="status" role="status" aria-live="polite" hidden>
+          <div class="bar"><div id="barFill"></div></div>
+          <p id="statusText"></p>
+        </div>
+        <details class="log"><summary>Technical details</summary><pre id="log"></pre></details>
+        <p class="note">The first run downloads the AI model once. Your browser keeps it for next time.</p>
+      </section>
+
+      <section class="paper" aria-labelledby="tx-title">
+        <div class="paper-head">
+          <h2 id="tx-title">Transcript</h2>
+          <div class="actions">
+            <label class="check"><input type="checkbox" id="tsToggle" checked> Timestamps</label>
+            <button id="copyBtn" disabled>Copy</button>
+            <button id="saveBtn" disabled>Save .txt</button>
+          </div>
+        </div>
+        <div id="output" class="output empty">Your transcript will appear here.</div>
+      </section>
+    </main>
+
+    <footer>Powered by OpenAI Whisper through Transformers.js. English only.</footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
